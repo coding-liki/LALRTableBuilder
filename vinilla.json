@@ -1,0 +1,6 @@
+{
+  "name": "LALRTableBuilder",
+  "vendor": "CodingLiki",
+  "description": "Скрипт формирует  LALR таблицу. Она используется для парсинга текста в целях определения соответствия текста некоторой контекстнонезависимой грамматике, а также (чаще всего) составления ast дерева",
+  "repo_url": "https://github.com/coding-liki/LALRTableBuilder.git"
+}
