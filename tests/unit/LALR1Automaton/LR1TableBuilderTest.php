@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace LALR1Automaton;
+namespace unit\LALR1Automaton;
 
 use Codeception\Test\Unit;
 use CodingLiki\GrammarParser\GrammarRuleParser;
+use LALR1Automaton\AutomatonBuilder;
 use LALR1Automaton\Table\LALR1TableBuilder;
 
 class LR1TableBuilderTest extends Unit

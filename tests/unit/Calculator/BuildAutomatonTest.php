@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Calculator;
+namespace unit\Calculator;
 
 use Codeception\Test\Unit;
 use CodingLiki\GrammarParser\GrammarRuleParser;

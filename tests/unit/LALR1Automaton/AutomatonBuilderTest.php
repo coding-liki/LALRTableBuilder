@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace LALR1Automaton;
+namespace unit\LALR1Automaton;
 
 use Codeception\Test\Unit;
 use CodingLiki\GrammarParser\GrammarRuleParser;
@@ -10,6 +10,7 @@ use CodingLiki\GrammarParser\Rule\RulePart;
 use CodingLiki\GrammarParser\RulesHelper;
 use LALR1Automaton\Automaton\RuleStep;
 use LALR1Automaton\Automaton\State;
+use LALR1Automaton\AutomatonBuilder;
 
 class AutomatonBuilderTest extends Unit
 {

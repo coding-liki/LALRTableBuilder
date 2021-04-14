@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace LALR1Automaton;
+namespace unit\LALR1Automaton;
 
 use CodingLiki\GrammarParser\GrammarRuleParser;
+use LALR1Automaton\AutomatonBuilder;
 use LALR1Automaton\Table\CsvSaver;
 use LALR1Automaton\Table\LALR1TableBuilder;
 use PHPUnit\Framework\TestCase;
