@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace LALR1Automaton;
 
-use GrammarParser\FirstSetCalculator;
-use GrammarParser\FollowSetCalculator;
-use GrammarParser\Rule;
-use GrammarParser\RulesHelper;
+use CodingLiki\GrammarParser\Calculators\FollowSetCalculator;
+use CodingLiki\GrammarParser\Rule\Rule;
+use CodingLiki\GrammarParser\RulesHelper;
 use LALR1Automaton\Automaton\RuleStep;
 use LALR1Automaton\Automaton\State;
 
@@ -77,7 +76,6 @@ class AutomatonBuilder
 
     /**
      * @param RuleStep[] $initSteps
-     * @param string $symbol
      * @return array
      */
     private function calculateRuleSteps(array $initSteps): array
@@ -98,8 +96,8 @@ class AutomatonBuilder
         $closureSteps = [];
 
         if($initStep->canAdvance(1)){
-            $nextPart = $initStep->getRule()->parts[$initStep->getPosition()];
-            $closureRules = RulesHelper::getRulesByName($nextPart, $this->rules);
+            $nextPart = $initStep->getRule()->getParts()[$initStep->getPosition()];
+            $closureRules = RulesHelper::getRulesByName($nextPart->getData(), $this->rules);
             $closureFirstSet = $this->calculateClosureFirstSet($initStep);
 
             if(!empty($closureRules)){
@@ -119,7 +117,7 @@ class AutomatonBuilder
     {
         $closureFirstSet = $initStep->getFirstSet();
         if ($initStep->canAdvance(2)) {
-            $closureFirstSet = $this->followSetCalculator->calculate($initStep->getRule()->parts[$initStep->getPosition()]);
+            $closureFirstSet = $this->followSetCalculator->calculate($initStep->getRule()->getParts()[$initStep->getPosition()]->getData());
         }
 
         return $closureFirstSet;
@@ -134,8 +132,8 @@ class AutomatonBuilder
         $sortedSteps = [];
         foreach ($steps as $step){
             if($step->canAdvance(1)) {
-                $nextPart = $step->getRule()->parts[$step->getPosition()];
-                $sortedSteps[$nextPart][] = $step;
+                $nextPart = $step->getRule()->getParts()[$step->getPosition()];
+                $sortedSteps[$nextPart->getData()][] = $step;
             }
         }
 

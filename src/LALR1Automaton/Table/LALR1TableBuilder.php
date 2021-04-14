@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace LALR1Automaton\Table;
 
-use GrammarParser\Rule;
-use GrammarParser\RulesHelper;
+use CodingLiki\GrammarParser\Rule\Rule;
+use CodingLiki\GrammarParser\RulesHelper;
 use LALR1Automaton\Automaton\State;
 
 class LALR1TableBuilder
@@ -43,7 +43,7 @@ class LALR1TableBuilder
                     foreach ($step->getFirstSet() as $first){
                         $ruleNumber = array_keys($this->rules, $step->getRule())[0];
                         $result = sprintf("r%s", $ruleNumber);
-                        if($step->getRule()->name === RulesHelper::ROOT_RULE_NAME){
+                        if($step->getRule()->getName() === RulesHelper::ROOT_RULE_NAME){
                             $result = 'acc';
                         }
                         $table[$stateNumber][$first] = $result;
@@ -55,7 +55,7 @@ class LALR1TableBuilder
         return $this->normalizeTable($table);
     }
 
-    private function pickAllStates()
+    private function pickAllStates(): void
     {
         $this->allStates[] = $this->rootState;
         foreach ($this->rootState->children as $child) {

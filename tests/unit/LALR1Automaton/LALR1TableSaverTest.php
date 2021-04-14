@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace LALR1Automaton;
 
-use GrammarParser\GrammarRuleParser;
-use GrammarParser\RulesHelper;
+use CodingLiki\GrammarParser\GrammarRuleParser;
 use LALR1Automaton\Table\CsvSaver;
 use LALR1Automaton\Table\LALR1TableBuilder;
 use PHPUnit\Framework\TestCase;

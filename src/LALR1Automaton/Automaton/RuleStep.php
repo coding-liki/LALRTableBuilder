@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace LALR1Automaton\Automaton;
 
-use GrammarParser\Rule;
+use CodingLiki\GrammarParser\Rule\Rule;
+
 class RuleStep
 {
     public function __construct(private Rule $rule, private int $position, private array $firstSet)
@@ -27,7 +28,7 @@ class RuleStep
 
     public function canAdvance(int $steps): bool
     {
-        return $this->position + $steps <= count($this->rule->parts);
+        return $this->position + $steps <= count($this->rule->getParts());
     }
 
     public function getRule(): Rule
