@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace LALR1Automaton\Table;
 
 use CodingLiki\GrammarParser\Rule\Rule;
+use CodingLiki\GrammarParser\Rule\RulePart;
 use CodingLiki\GrammarParser\RulesHelper;
 use LALR1Automaton\Automaton\State;
 
@@ -26,17 +27,13 @@ class LALR1TableBuilder
 
     public function build(): array
     {
-        $this->pickAllStates();
+        $this->pickAllStates($this->rootState);
 
         $table = [];
 
         foreach ($this->allStates as $stateNumber => $state){
             $table[$stateNumber] = [];
 
-            foreach ($state->children as $child){
-                $childNumber = array_keys($this->allStates, $child)[0];
-                $table[$stateNumber][$child->symbol] = sprintf("s%s", $childNumber);
-            }
 
             foreach ($state->ruleSteps as $step){
                 if(!$step->canAdvance(1)){
@@ -50,20 +47,25 @@ class LALR1TableBuilder
                     }
                 }
             }
+
+            foreach ($state->children as $child){
+                $childNumber = array_keys($this->allStates, $child)[0];
+                if(isset($table[$stateNumber][$child->symbol])){
+                    throw new \Exception("shift reduse conflict in [$stateNumber][{$child->symbol}] has {$table[$stateNumber][$child->symbol]}");
+                }
+                $table[$stateNumber][$child->symbol] = sprintf("s%s", $childNumber);
+            }
         }
 
         return $this->normalizeTable($table);
     }
 
-    private function pickAllStates(): void
+    private function pickAllStates($state): void
     {
-        $this->allStates[] = $this->rootState;
-        foreach ($this->rootState->children as $child) {
+        $this->allStates[] = $state;
+        foreach ($state->children as $child) {
             if (!in_array($child, $this->allStates, true)) {
-                $oldState = $this->rootState;
-                $this->rootState = $child;
-                $this->pickAllStates();
-                $this->rootState = $oldState;
+                $this->pickAllStates($child);
             }
         }
     }
@@ -81,7 +83,7 @@ class LALR1TableBuilder
         foreach ($table as $number => &$row){
             foreach ($fullKeys as $key){
                 if(!isset($row[$key])){
-                    $row[$key] = 'ERROR';
+                    $row[$key] = 'e';
                 }
             }
             $row['~'] = $number;

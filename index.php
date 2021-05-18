@@ -32,6 +32,20 @@ $table = $tableBuilder->build();
 
 $saver = new \LALR1Automaton\Table\CsvSaver($table);
 
-$saver->save(dirname($path) . "/" . basename($path) . ".lrt");
+$testFileName = dirname($path) . "/" . basename($path) . ".lrt";
+$saver->save($testFileName);
 
+$rules = $builder->rules;
+
+$file = fopen($testFileName."_rules.csv", 'wb');
+fputcsv($file, ['number', 'rule']);
+
+foreach ($rules as $number => $rule){
+    fputcsv($file, [
+        $number,
+        $rule
+    ]);
+}
+
+fclose($file);
 __HALT_COMPILER();

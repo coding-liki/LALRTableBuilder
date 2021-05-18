@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace unit\LALR1Automaton;
 
 use Codeception\Test\Unit;
+use CodingLiki\GrammarParser\Calculators\FollowSetCalculator;
 use CodingLiki\GrammarParser\GrammarRuleParser;
 use LALR1Automaton\AutomatonBuilder;
 use LALR1Automaton\Table\LALR1TableBuilder;
@@ -13,7 +14,7 @@ class LR1TableBuilderTest extends Unit
 
     public function testBuild(): void
     {
-        $rules = GrammarRuleParser::parse(file_get_contents(__DIR__.'/../../../grammar/calculator.grr'));
+        $rules = GrammarRuleParser::parse(file_get_contents(__DIR__.'/../../../grammar/calculator_new.grr'));
         $builder = new AutomatonBuilder($rules);
 
         $state = $builder->buildFromRules();

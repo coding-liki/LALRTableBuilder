@@ -31,7 +31,7 @@ class State implements JsonSerializable
     {
         $checkedChildren = [];
         $me = $this;
-        $myNextPart = $this->ruleSteps[0]->getRule()->parts[$this->ruleSteps[0]->getPosition()];
+        $myNextPart = $this->ruleSteps[0]->getRule()->getParts()[$this->ruleSteps[0]->getPosition()];
         foreach ($this->children as $nextPart => $child){
             if(!isset($checkedChildren[$nextPart])){
                 $checkedChildren[$nextPart] = [];

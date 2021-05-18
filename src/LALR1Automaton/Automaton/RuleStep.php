@@ -54,6 +54,6 @@ class RuleStep
 
     public function __toString(): string
     {
-        return implode('@', [implode('%', [$this->firstSet]), $this->position, $this->rule]);
+        return implode('@', [implode('%', $this->firstSet), $this->position, $this->rule]);
     }
 }

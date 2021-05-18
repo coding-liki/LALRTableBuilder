@@ -1,0 +1,23 @@
+# список правил грамматики для калькулятора
+
+expression:
+    mulExpression plusMinusPart*;
+
+plusMinusPart:
+    PLUS mulExpression
+    | MINUS mulExpression;
+
+mulExpression: atom mulDivPart*;
+
+mulDivPart:
+    MUL atom
+    | DIV atom;
+
+atom:
+    FLOAT_NUM
+    | INT_NUM
+    | L_P expression R_P;
+
+
+
+
