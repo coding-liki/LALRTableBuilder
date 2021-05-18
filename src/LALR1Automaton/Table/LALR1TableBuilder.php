@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace LALR1Automaton\Table;
 
 use CodingLiki\GrammarParser\Rule\Rule;
-use CodingLiki\GrammarParser\Rule\RulePart;
 use CodingLiki\GrammarParser\RulesHelper;
+use Exception;
 use LALR1Automaton\Automaton\State;
 
 class LALR1TableBuilder
@@ -25,6 +25,9 @@ class LALR1TableBuilder
     {
     }
 
+    /**
+     * @throws Exception
+     */
     public function build(): array
     {
         $this->pickAllStates($this->rootState);
@@ -51,7 +54,7 @@ class LALR1TableBuilder
             foreach ($state->children as $child){
                 $childNumber = array_keys($this->allStates, $child)[0];
                 if(isset($table[$stateNumber][$child->symbol])){
-                    throw new \Exception("shift reduse conflict in [$stateNumber][{$child->symbol}] has {$table[$stateNumber][$child->symbol]}");
+                    throw new Exception("shift reduce conflict in [$stateNumber][$child->symbol] has {$table[$stateNumber][$child->symbol]}");
                 }
                 $table[$stateNumber][$child->symbol] = sprintf("s%s", $childNumber);
             }
